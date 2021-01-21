@@ -1,7 +1,8 @@
 extends layout
 
-mixin userRow(firstName, lastName, email)
-   tr 
+mixin userRow(id, firstName, lastName, email)
+   tr
+      td= id
       td= firstName
       td= lastName
       td= email
@@ -19,6 +20,5 @@ block content
             th Favorite Beatle
             th Likes Ice Cream
       tbody
-         each user in users 
-            +userRow(user.firstName, user.lastName, user.email)
-            
+         each user in users
+            +userRow(user.id, user.firstName, user.lastName, user.email)

@@ -1,0 +1,18 @@
+html
+   head
+   title
+   body
+      form(method="post", action="/create")
+         fieldset
+            legend
+            label(for = "firstName") First Name
+            input(type="text", name="firstName")
+            label(for = "lastName") Last Name
+            input(type="text", name="lastName")
+            label(for = "email") Email
+            input(type="text", name="email")
+            label(for = "password") Password
+            input(type="text", name="password")
+            label(for = "confirmedPassword") Confirm Password
+            input(type="text", name="confirmedPassword")
+            button(type="submit") Submit
