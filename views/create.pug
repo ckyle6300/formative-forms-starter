@@ -1,19 +1,22 @@
-html
-   head
-   title
-   body
-      form(method="post", action="/create")
-         fieldset
-            legend
-            //- input(type="hidden", name="_csrf" value= csrfToken)
-            label(for = "firstName") First Name
-            input(type="text", name="firstName")
-            label(for = "lastName") Last Name
-            input(type="text", name="lastName")
-            label(for = "email") Email
-            input(type="text", name="email")
-            label(for = "password") Password
-            input(type="text", name="password")
-            label(for = "confirmedPassword") Confirm Password
-            input(type="text", name="confirmedPassword")
-            button(type="submit") Submit
+extends layout
+block errors
+   if (errors)
+      ul
+         each error in errors
+            li #{error}
+block table
+   form(method="post", action="/create")
+      fieldset
+         legend
+         input(type="hidden", name="_csrf" value= csrfToken)
+         label(for = "firstName") First Name
+         input(type="text", name="firstName")
+         label(for = "lastName") Last Name
+         input(type="text", name="lastName")
+         label(for = "email") Email
+         input(type="email", name="email")
+         label(for = "password") Password
+         input(type="password", name="password")
+         label(for = "confirmedPassword") Confirm Password
+         input(type="password", name="confirmedPassword")
+         button(type="submit") Submit

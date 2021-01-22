@@ -1,13 +1,17 @@
 const express = require("express");
-// const csurf = require('csurf');
-// const cookieParser = require('cookie-parser');
+const csurf = require('csurf');
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.set("view engine", "pug");
+app.set('view engine', 'pug');
+
 app.use(express.urlencoded({ extended: true }));
 
-// const csrfProtection = csurf({ cookie: true });
+const csrfProtection = csurf({ cookie: true });
+app.use(cookieParser());
+
+
 
 const users = [
    {
@@ -29,14 +33,29 @@ app.get("/", (req, res) => {
    res.render('index', { users })
 });
 
-app.get("/create", (req, res) => {
-   res.render('create')
+app.get("/create", csrfProtection, (req, res) => {
+   res.render('create', {csrfToken:req.csrfToken()})
 })
 
-app.post("/create", (req, res) => {
-   console.log(req.body);
-   users.push(req.body)
-   res.redirect("/");
+app.post("/create", csrfProtection, (req, res) => {
+
+   let errors = [];
+   for (let field in req.body) {
+      console.log(field)
+      if (!req.body[field]) {
+         errors.push(`Please provide a ${field}.`)
+      }
+   }
+
+   if (errors.length) {
+      errors = errors.slice(1)
+      res.render('create', {csrfToken:req.csrfToken(), errors})
+   } else {
+      users.push(req.body)
+      res.redirect("/");
+   }
+
+
 })
 
 
